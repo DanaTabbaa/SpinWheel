@@ -121,7 +121,7 @@ export default {
       winnerResult: null,
       slices: this.createColorTextArray(11),
       sliceTextPosition: 'edge',
-      sliceFontStyle: 'bold 16px Arial',
+      sliceFontStyle: 'bold 12px Arial',
       isSpinning: false,
       defaultWinner: 0,
       sounds: {
