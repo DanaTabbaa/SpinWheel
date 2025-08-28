@@ -56,7 +56,7 @@
                 <button
                     class="spin-button "
                     style="background-color:#f6fa00;color: black !important;"
-                    :disabled="isSpinning || hasSpun"
+                    :disabled="isSpinning"
                     @click="spinRandom()"
                     @mouseover="handleSpinButtonHover"
                     @mouseleave="handleSpinButtonLeave">
@@ -180,6 +180,7 @@ export default {
         '   غيم اخطبوط '   ,
         '  ماتش فيشة   '   ,
         '   تكت سينما   '   ,
+        '  خصم 30% كافيه   '   ,
         '   تكت دانس فلور   '   ,
         '   اشتراك شهري مجاني   ',
         '   مشروب فري     ' ,
@@ -193,7 +194,7 @@ export default {
         '#f6fa00',
         '#020202',
       ];  // Predefined colors
-      for (let i = 0; i < names.length; i++) {
+      for (let i = 1; i < names.length; i++) {
         let color = colors[i % colors.length]; // Alternate colors
         results.push({
           color: color,  // Alternate colors
@@ -267,10 +268,18 @@ export default {
 
       }
 
-        // Store flag in localStorage
-  localStorage.setItem('hasSpunWheel', 'true');
+  this.isSpinning = false;
+  this.winnerResult = this.slices[winnerIndex];
 
-  // Disable the spin button permanently
+  // Save winner prize and spin flag in localStorage
+  localStorage.setItem('hasSpunWheel', 'true');
+  localStorage.setItem('lastPrize', this.winnerResult.text);
+
+  // Show modal if it's not "Game Over"
+  if (this.winnerResult.text !== '   Game Over   ') {
+    this.showWinnerModal = true;
+  }
+
   this.hasSpun = true;
     }
   },
@@ -278,9 +287,15 @@ export default {
     this.buttonHoverAudio = new Audio(hoverSound);
     this.buttonLeaveAudio = new Audio(leaveSound);
     this.buttonClickAudio = new Audio(clickSound);
-    const hasSpun = localStorage.getItem('hasSpunWheel');
+  const hasSpun = localStorage.getItem('hasSpunWheel');
+  const lastPrize = localStorage.getItem('lastPrize');
+
   if (hasSpun === 'true') {
     this.hasSpun = true;
+  }
+
+  if (lastPrize) {
+    this.winnerResult = { text: lastPrize }; // Restore prize display
   }
   }
 };
