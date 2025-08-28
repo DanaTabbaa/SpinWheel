@@ -5,61 +5,44 @@
     <div class="row align-content-start justify-content-around">
 
       <div class="col-12 text-center">
-        <img     width="70"  src="https://heroes-woad.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo-2.4c6f6315.png&w=48&q=75" />
+        <img width="70"
+          src="https://heroes-woad.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo-2.4c6f6315.png&w=48&q=75" />
       </div>
 
       <div class="col-12 col-lg-7 px-lg-5 order-0 order-lg-1">
 
         <div class="sticky-top">
 
-       <div class="fs-2 text-center custom-text-container">
-  <div class="welcome-text">
-    Welcome To Hero's Station
-  </div>
-  <div v-if="winnerResult" class="winner-text">
-    <span v-if="winnerResult.text != '   Game Over   '">ربحت:</span>  
-    <span >{{ winnerResult.text }}</span> <span  v-if="winnerResult.text != '   Game Over   '">🎉</span>
-  </div>
-  <div v-else-if="isSpinning" class="spinning-text" style="color: black;">
-    Spinning...
-  </div>
-</div>
+          <div class="fs-2 text-center custom-text-container">
+            <div class="welcome-text">
+              Welcome To Hero's Station
+            </div>
+            <div v-if="winnerResult" class="winner-text">
+              <span v-if="winnerResult.text != '   Game Over   '">ربحت:</span>
+              <span>{{ winnerResult.text }}</span> <span v-if="winnerResult.text != '   Game Over   '">🎉</span>
+            </div>
+            <div v-else-if="isSpinning" class="spinning-text" style="color: black;">
+              Spinning...
+            </div>
+          </div>
 
-          <ShiningDots
-              :color="shiningDotsColor"
-              :border-color="shiningDotsBorderColor"
-              :shine-color="shiningDotsShineColor"
-              :border-width="shiningDotsBorderWidth"
-              :size="shiningDotsSize"
-              :count="shiningDotsCount">
+          <ShiningDots :color="shiningDotsColor" :border-color="shiningDotsBorderColor"
+            :shine-color="shiningDotsShineColor" :border-width="shiningDotsBorderWidth" :size="shiningDotsSize"
+            :count="shiningDotsCount">
 
-            <VueWheelSpinner
-                ref="spinner"
-                class="temp"
-                :slices="slices"
-                :slice-text-align="center"
-                :slice-text-position="sliceTextPosition"
-                :slice-font-style="sliceFontStyle"
-                :winner-index="defaultWinner"
-                :sounds="sounds"
-                :cursor-angle="cursorAngle"
-                :cursor-position="cursorPosition"
-                :cursor-distance="cursorDistance"
-                @spin-start="onSpinStart"
-                @spin-end="onSpinEnd">
+            <VueWheelSpinner ref="spinner" class="temp" :slices="slices" :slice-text-align="center"
+              :slice-text-position="sliceTextPosition" :slice-font-style="sliceFontStyle" :winner-index="defaultWinner"
+              :sounds="sounds" :cursor-angle="cursorAngle" :cursor-position="cursorPosition"
+              :cursor-distance="cursorDistance" @spin-start="onSpinStart" @spin-end="onSpinEnd">
 
               <template #cursor>
                 <img class="cursor-img" :src="cursorImage" alt="Cursor">
               </template>
 
               <template #default>
-                <button
-                    class="spin-button "
-                    style="background-color:#f6fa00;color: black !important;"
-                    :disabled="isSpinning"
-                    @click="spinRandom()"
-                    @mouseover="handleSpinButtonHover"
-                    @mouseleave="handleSpinButtonLeave">
+                <button class="spin-button " style="background-color:#f6fa00;color: black !important;"
+                  :disabled="isSpinning" @click="spinRandom()" @mouseover="handleSpinButtonHover"
+                  @mouseleave="handleSpinButtonLeave">
                   أبدأ
                 </button>
               </template>
@@ -67,13 +50,13 @@
             </VueWheelSpinner>
 
           </ShiningDots>
-<div v-if="showWinnerModal" class="modal-overlay" @click="closeWinnerModal">
-  <div class="modal-content" @click.stop>
-    <h2>🎉 مبروك! 🎉</h2>
-    <p>{{ winnerResult.text }}</p>
-    <button @click="closeWinnerModal">إغلاق</button>
-  </div>
-</div>
+          <div v-if="showWinnerModal" class="modal-overlay" @click="closeWinnerModal">
+            <div class="modal-content" @click.stop>
+              <h2>🎉 مبروك! 🎉</h2>
+              <p>{{ winnerResult.text }}</p>
+              <button @click="closeWinnerModal">إغلاق</button>
+            </div>
+          </div>
           <!-- <div>
             <button
                 class="btn btn-success btn-lg rounded-pill w-100 py-4"
@@ -115,8 +98,8 @@ export default {
   },
   data() {
     return {
-     showWinnerModal: false,
-    hasSpun: false,
+      showWinnerModal: false,
+      hasSpun: false,
       winnerResult: null,
       slices: this.createColorTextArray(11),
       sliceTextPosition: 'edge',
@@ -172,25 +155,26 @@ export default {
       return brightness > 125 ? '#000000' : '#ffffff';
     },
     createColorTextArray(count) {
-       const names=[
-        '  غيم بولينغ   '   ,
-                       '   Game Over   ',
+      const names = [
+        '  غيم بولينغ   ',
 
-        '  ساعة بلياردو   '   ,
-        '  ساعة بينغ بونغ   '   ,
-        '   pc ساعتين '   ,
-        '   غيم اخطبوط '   ,
-        '  ماتش فيشة   '   ,
+        '  ساعة بلياردو   ',
+        '  ساعة بينغ بونغ   ',
+        '   pc ساعتين ',
+        '   Game Over   ',
 
-        '   تكت سينما   '   ,
-        '  خصم 30% كافيه   '   ,
-                       '   Game Over   ',
+        '   غيم اخطبوط ',
+        '  ماتش فيشة   ',
 
-        '   تكت دانس فلور   '   ,
+        '   تكت سينما   ',
+        '  خصم 30% كافيه   ',
+        '   Game Over   ',
+
+        '   تكت دانس فلور   ',
         '   اشتراك شهري مجاني   ',
-        '   مشروب فري     ' ,
+        '   مشروب فري     ',
         '   خصم 25% كرانشي   ',
-       '   Golden Card   '   ,
+        '   Golden Card   ',
         '   ماتش كارتينغ   ',
         '   Game Over   '
       ]
@@ -250,9 +234,9 @@ export default {
       });
     },
 
-  closeWinnerModal() {
-    this.showWinnerModal = false;
-  },
+    closeWinnerModal() {
+      this.showWinnerModal = false;
+    },
     spinFor(index) {
       this.defaultWinner = index;
       this.$refs.spinner.spinWheel(index);
@@ -268,48 +252,49 @@ export default {
     onSpinEnd(winnerIndex) {
       this.isSpinning = false;
       this.winnerResult = this.slices[winnerIndex];
-      if(this.winnerResult.text != '   Game Over   '){
-       this.showWinnerModal = true;
+      if (this.winnerResult.text != '   Game Over   ') {
+        this.showWinnerModal = true;
 
       }
 
-  this.isSpinning = false;
-  this.winnerResult = this.slices[winnerIndex];
+      this.isSpinning = false;
+      this.winnerResult = this.slices[winnerIndex];
 
-  // Save winner prize and spin flag in localStorage
-  localStorage.setItem('hasSpunWheel', 'true');
-  localStorage.setItem('lastPrize', this.winnerResult.text);
+      // Save winner prize and spin flag in localStorage
+      localStorage.setItem('hasSpunWheel', 'true');
+      localStorage.setItem('lastPrize', this.winnerResult.text);
 
-  // Show modal if it's not "Game Over"
-  if (this.winnerResult.text !== '   Game Over   ') {
-    this.showWinnerModal = true;
-  }
+      // Show modal if it's not "Game Over"
+      if (this.winnerResult.text !== '   Game Over   ') {
+        this.showWinnerModal = true;
+      }
 
-  this.hasSpun = true;
+      this.hasSpun = true;
     }
   },
   mounted() {
     this.buttonHoverAudio = new Audio(hoverSound);
     this.buttonLeaveAudio = new Audio(leaveSound);
     this.buttonClickAudio = new Audio(clickSound);
-  const hasSpun = localStorage.getItem('hasSpunWheel');
-  const lastPrize = localStorage.getItem('lastPrize');
+    const hasSpun = localStorage.getItem('hasSpunWheel');
+    const lastPrize = localStorage.getItem('lastPrize');
 
-  if (hasSpun === 'true') {
-    this.hasSpun = true;
-  }
+    if (hasSpun === 'true') {
+      this.hasSpun = true;
+    }
 
-  if (lastPrize) {
-    this.winnerResult = { text: lastPrize }; // Restore prize display
-  }
+    if (lastPrize) {
+      this.winnerResult = { text: lastPrize }; // Restore prize display
+    }
   }
 };
 </script>
 
 <style>
-.temp p{
+.temp p {
   padding: 2px;
 }
+
 .cursor-img {
   width: 50px;
   aspect-ratio: 1 / 1;
@@ -352,6 +337,7 @@ export default {
   }
 
 }
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -359,7 +345,7 @@ export default {
   width: 100%;
   height: 100%;
   /* Black gradient background */
-  background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(30,30,30,0.8));
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(30, 30, 30, 0.8));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -369,8 +355,10 @@ export default {
 }
 
 .modal-content {
-  background: #121212; /* dark background */
-  color: #f6fa00; /* your bright yellow */
+  background: #121212;
+  /* dark background */
+  color: #f6fa00;
+  /* your bright yellow */
   padding: 2.5rem 3rem;
   border-radius: 15px;
   text-align: center;
@@ -411,6 +399,7 @@ export default {
     opacity: 0;
     transform: translateY(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -434,10 +423,11 @@ export default {
 .winner-text {
   font-weight: 700;
   font-size: 1.8rem;
-  color: #f6fa00; /* your yellow */
+  color: #f6fa00;
+  /* your yellow */
   letter-spacing: 0.04em;
   margin-top: 1.5rem;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .spinning-text {
@@ -447,7 +437,4 @@ export default {
   margin-top: 1.5rem;
   font-style: italic;
 }
-
-
-
 </style>
