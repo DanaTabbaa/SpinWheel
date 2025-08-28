@@ -8,8 +8,6 @@
         <img     width="70"  src="https://heroes-woad.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo-2.4c6f6315.png&w=48&q=75" />
       </div>
 
-
-
       <div class="col-12 col-lg-7 px-lg-5 order-0 order-lg-1">
 
         <div class="sticky-top">
@@ -19,10 +17,10 @@
     Welcome To Hero's Station
   </div>
   <div v-if="winnerResult" class="winner-text">
-    <span v-if="winnerResult.text != 'Game Over'">ربحت:</span>  
-    <span>{{ winnerResult.text }}</span> 🎉
+    <span v-if="winnerResult.text != '   Game Over   '">ربحت:</span>  
+    <span >{{ winnerResult.text }}</span> <span  v-if="winnerResult.text != '   Game Over   '">🎉</span>
   </div>
-  <div v-else-if="isSpinning" class="spinning-text">
+  <div v-else-if="isSpinning" class="spinning-text" style="color: black;">
     Spinning...
   </div>
 </div>
@@ -58,7 +56,7 @@
                 <button
                     class="spin-button "
                     style="background-color:#f6fa00;color: black !important;"
-                    :disabled="isSpinning"
+                    :disabled="isSpinning || hasSpun"
                     @click="spinRandom()"
                     @mouseover="handleSpinButtonHover"
                     @mouseleave="handleSpinButtonLeave">
@@ -118,6 +116,7 @@ export default {
   data() {
     return {
      showWinnerModal: false,
+    hasSpun: false,
       winnerResult: null,
       slices: this.createColorTextArray(11),
       sliceTextPosition: 'edge',
@@ -176,13 +175,16 @@ export default {
        const names=[
         '  غيم بولينغ   '   ,
         '  ساعة بلياردو   '   ,
-        '  غيم فيشة   '   ,
+        '  ساعة بينغ بونغ   '   ,
+        '   pc ساعتين '   ,
+        '   غيم اخطبوط '   ,
+        '  ماتش فيشة   '   ,
         '   تكت سينما   '   ,
         '   تكت دانس فلور   '   ,
-        '   Golden Card   '   ,
         '   اشتراك شهري مجاني   ',
         '   مشروب فري     ' ,
         '   خصم 25% كرانشي   ',
+       '   Golden Card   '   ,
         '   ماتش كارتينغ   ',
         '   Game Over   '
       ]
@@ -191,7 +193,7 @@ export default {
         '#f6fa00',
         '#020202',
       ];  // Predefined colors
-      for (let i = 1; i < names.length; i++) {
+      for (let i = 0; i < names.length; i++) {
         let color = colors[i % colors.length]; // Alternate colors
         results.push({
           color: color,  // Alternate colors
@@ -260,13 +262,26 @@ export default {
     onSpinEnd(winnerIndex) {
       this.isSpinning = false;
       this.winnerResult = this.slices[winnerIndex];
+      if(this.winnerResult.text != '   Game Over   '){
        this.showWinnerModal = true;
+
+      }
+
+        // Store flag in localStorage
+  localStorage.setItem('hasSpunWheel', 'true');
+
+  // Disable the spin button permanently
+  this.hasSpun = true;
     }
   },
   mounted() {
     this.buttonHoverAudio = new Audio(hoverSound);
     this.buttonLeaveAudio = new Audio(leaveSound);
     this.buttonClickAudio = new Audio(clickSound);
+    const hasSpun = localStorage.getItem('hasSpunWheel');
+  if (hasSpun === 'true') {
+    this.hasSpun = true;
+  }
   }
 };
 </script>
